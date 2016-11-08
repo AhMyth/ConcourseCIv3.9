@@ -4,6 +4,13 @@
   description: "Deploy ConcourseCI In Rancher"
   uuid: concourse-0
   minimum_rancher_version: v1.0.0
+  questions:
+    - variable: CONCOURSE_EXTERNAL_ADDR
+      description: "Host Address"
+      label: "Concourse External Address"
+      type: "string"
+      required: true
+      
 concourse-db:
   scale: 1
 concourse-web:
