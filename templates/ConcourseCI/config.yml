@@ -1,6 +1,6 @@
 name: ConcourseCI
 description: |
   Deploy ConcourseCI In Rancher
-version: 2.4.0-rancher1
+version: 2.4.0
 category: Continuous Integration
 projectURL: "http://concourse.ci"

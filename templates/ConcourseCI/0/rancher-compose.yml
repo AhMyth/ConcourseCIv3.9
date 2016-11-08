@@ -1,6 +1,6 @@
 .catalog:
   name: "ConcourseCI"
-  version: "2.4.0-rancher1"
+  version: "2.4.0"
   description: "Deploy ConcourseCI In Rancher"
   uuid: concourse-0
   minimum_rancher_version: v1.0.0
