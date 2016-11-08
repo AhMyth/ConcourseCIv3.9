@@ -1,0 +1,12 @@
+.catalog:
+  name: "ConcourseCI"
+  version: "2.4.0-rancher1"
+  description: "Deploy ConcourseCI In Rancher"
+  uuid: concourse-0
+  minimum_rancher_version: v1.0.0
+concourse-db:
+  scale: 1
+concourse-web:
+  scale: 1
+concourse-worker:
+  scale: 1
