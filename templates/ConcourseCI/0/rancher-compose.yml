@@ -17,3 +17,5 @@ concourse-web:
   scale: 1
 concourse-worker:
   scale: 1
+concourse-datavolume:
+  scale: 1

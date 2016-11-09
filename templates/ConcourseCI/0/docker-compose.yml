@@ -8,6 +8,24 @@ concourse-db:
     POSTGRES_PASSWORD: leanswpass
     PGDATA: /database
 
+concourse-datavolume:
+  image: alpine
+  net: none
+  labels:
+    io.rancher.container.hostname_override: container_name
+    io.rancher.container.start_once: true
+    io.rancher.sidekicks: concourse-web,concourse-worker
+  volumes:
+    - /var/keys
+  entrypoint: apk --update add openssh &&
+    rm -rf /var/cache/apk/* &&
+    mkdir -p /var/keys/web /var/keys/worker &&
+    ssh-keygen -t rsa -f /var/keys/web/tsa_host_key -N '' &&
+    ssh-keygen -t rsa -f /var/keys/web/session_signing_key -N '' &&
+    ssh-keygen -t rsa -f /var/keys/worker/worker_key -N '' &&
+    cp /var/keys/worker/worker_key.pub /var/keys/web/authorized_worker_keys &&
+    cp /var/keys/web/tsa_host_key.pub /var/keys/worker
+
 concourse-web:
   image: concourse/concourse:2.4.0
   labels:
@@ -21,9 +39,9 @@ concourse-web:
     CONCOURSE_BASIC_AUTH_USERNAME: concourse
     CONCOURSE_BASIC_AUTH_PASSWORD: leanswpass
     CONCOURSE_EXTERNAL_URL: "http://${CONCOURSE_EXTERNAL_ADDR}:8080"
-    CONCOURSE_TSA_HOST_KEY: /var/keys/web/tsa_host_key
-    CONCOURSE_TSA_AUTHORIZED_KEYS: /var/keys/web/authorized_worker_keys
-    CONCOURSE_SESSION_SIGNING_KEY: /var/keys/web/session_signing_key
+    CONCOURSE_TSA_HOST_KEY: "/var/keys/web/tsa_host_key"
+    CONCOURSE_TSA_AUTHORIZED_KEYS: "/var/keys/web/authorized_worker_keys"
+    CONCOURSE_SESSION_SIGNING_KEY: "/var/keys/web/session_signing_key"
     CONCOURSE_POSTGRES_DATA_SOURCE: |-
       postgres://concourse:leanswpass@concourse-db:5432/concourse?sslmode=disable
 
@@ -38,23 +56,6 @@ concourse-worker:
     - concourse-datavolume
   environment:
     CONCOURSE_TSA_HOST: concourse-web
-    CONCOURSE_TSA_PUBLIC_KEY: /var/keys/worker/tsa_host_key.pub
-    CONCOURSE_TSA_WORKER_PRIVATE_KEY: /var/keys/worker/worker_key
-
-concourse-datavolume:
-  image: alpine
-  net: none
-  labels:
-    io.rancher.container.hostname_override: container_name
-    io.rancher.container.start_once: true
-  volumes:
-    - /var/keys
-  entrypoint: alpine apk --update add openssh &&
-    rm -rf /var/cache/apk/* &&
-    mkdir -p /var/keys/web /var/keys/worker &&
-    ssh-keygen -t rsa -f /var/keys/web/tsa_host_key -N '' &&
-    ssh-keygen -t rsa -f /var/keys/web/session_signing_key -N '' &&
-    ssh-keygen -t rsa -f /var/keys/worker/worker_key -N '' &&
-    cp /var/keys/worker/worker_key.pub /var/keys/web/authorized_worker_keys &&
-    cp /var/keys/web/tsa_host_key.pub /var/keys/worker
+    CONCOURSE_TSA_PUBLIC_KEY: "/var/keys/worker/tsa_host_key.pub"
+    CONCOURSE_TSA_WORKER_PRIVATE_KEY: "/var/keys/worker/worker_key"
 
