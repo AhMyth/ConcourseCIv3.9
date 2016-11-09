@@ -35,8 +35,7 @@ concourse-web:
   volumes_from:
     - concourse-datavolume
   environment:
-    CONCOURSE_BASIC_AUTH_USERNAME: "ccqg"
-    CONCOURSE_BASIC_AUTH_PASSWORD: "2016"
+    CONCOURSE_DEVELOPMENT_MODE: true
     CONCOURSE_EXTERNAL_URL: "http://${CONCOURSE_EXTERNAL_ADDR}:8080"
     CONCOURSE_TSA_HOST_KEY: "/var/keys/web/tsa_host_key"
     CONCOURSE_TSA_AUTHORIZED_KEYS: "/var/keys/web/authorized_worker_keys"
