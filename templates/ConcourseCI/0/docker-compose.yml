@@ -5,7 +5,7 @@ concourse-db:
   environment:
     POSTGRES_DB: concourse
     POSTGRES_USER: concourse
-    POSTGRES_PASSWORD: leanswpass
+    POSTGRES_PASSWORD: ccqg2016
     PGDATA: /database
 
 concourse-datavolume:
@@ -36,13 +36,13 @@ concourse-web:
     - concourse-datavolume
   environment:
     CONCOURSE_BASIC_AUTH_USERNAME: concourse
-    CONCOURSE_BASIC_AUTH_PASSWORD: leanswpass
+    CONCOURSE_BASIC_AUTH_PASSWORD: ccqg2016
     CONCOURSE_EXTERNAL_URL: "http://${CONCOURSE_EXTERNAL_ADDR}:8080"
     CONCOURSE_TSA_HOST_KEY: "/var/keys/web/tsa_host_key"
     CONCOURSE_TSA_AUTHORIZED_KEYS: "/var/keys/web/authorized_worker_keys"
     CONCOURSE_SESSION_SIGNING_KEY: "/var/keys/web/session_signing_key"
     CONCOURSE_POSTGRES_DATA_SOURCE: |-
-      postgres://concourse:leanswpass@concourse-db:5432/concourse?sslmode=disable
+      postgres://concourse:ccqg2016@concourse-db:5432/concourse?sslmode=disable
 
 concourse-worker:
   image: concourse/concourse:2.4.0

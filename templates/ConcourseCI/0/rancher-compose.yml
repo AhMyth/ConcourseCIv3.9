@@ -6,10 +6,11 @@
   minimum_rancher_version: v1.0.0
   questions:
     - variable: CONCOURSE_EXTERNAL_ADDR
-      description: "Host Address"
+      description: "Address of Concourse Service"
       label: "Concourse External Address"
       type: "string"
       required: true
+      default: "0.0.0.0"
       
 concourse-db:
   scale: 1
