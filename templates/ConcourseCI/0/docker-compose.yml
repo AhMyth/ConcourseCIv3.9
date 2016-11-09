@@ -10,21 +10,20 @@ concourse-db:
 
 concourse-datavolume:
   image: alpine
-  net: none
   labels:
     io.rancher.container.hostname_override: container_name
     io.rancher.container.start_once: true
     io.rancher.sidekicks: concourse-web,concourse-worker
   volumes:
     - /var/keys
-  entrypoint: apk --update add openssh &&
+  command: sh -c "apk --update add openssh &&
     rm -rf /var/cache/apk/* &&
     mkdir -p /var/keys/web /var/keys/worker &&
     ssh-keygen -t rsa -f /var/keys/web/tsa_host_key -N '' &&
     ssh-keygen -t rsa -f /var/keys/web/session_signing_key -N '' &&
     ssh-keygen -t rsa -f /var/keys/worker/worker_key -N '' &&
     cp /var/keys/worker/worker_key.pub /var/keys/web/authorized_worker_keys &&
-    cp /var/keys/web/tsa_host_key.pub /var/keys/worker
+    cp /var/keys/web/tsa_host_key.pub /var/keys/worker"
 
 concourse-web:
   image: concourse/concourse:2.4.0
