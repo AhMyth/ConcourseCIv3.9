@@ -26,7 +26,7 @@ concourse-datavolume:
     cp /var/keys/web/tsa_host_key.pub /var/keys/worker"
 
 concourse-web:
-  image: concourse/concourse:2.4.0
+  image: concourse/concourse:3.9.2
   labels:
     io.rancher.container.hostname_override: container_name
   links: [concourse-db]
@@ -44,7 +44,7 @@ concourse-web:
       postgres://concourse:leanswpass@concourse-db:5432/concourse?sslmode=disable
 
 concourse-worker:
-  image: concourse/concourse:2.4.0
+  image: concourse/concourse:3.9.2
   privileged: true
   labels:
     io.rancher.container.hostname_override: container_name

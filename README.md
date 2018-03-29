@@ -1,3 +1,3 @@
 # continuous-integration-catalog
 
-Rancher Catalog for Concourse CI and Jenkins v2
+Rancher Catalog for Concourse CI v3.9.2

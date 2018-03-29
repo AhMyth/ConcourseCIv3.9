@@ -1,6 +1,0 @@
-name: Jenins v2
-description: |
-  Deploy Jenkins v2 In Rancher
-version: 2.19.2
-category: Continuous Integration
-projectURL: "https://jenkins.io"
